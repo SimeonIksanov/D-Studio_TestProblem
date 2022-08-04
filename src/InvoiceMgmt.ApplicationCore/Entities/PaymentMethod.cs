@@ -2,7 +2,7 @@
 
 public enum PaymentMethod
 {
-    CreditCard,
-    DebitCard,
-    ECheck
+    CreditCard = 0b_001,
+    DebitCard = 0b_010,
+    ECheck = 0b_100
 }

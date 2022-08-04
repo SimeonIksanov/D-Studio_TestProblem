@@ -2,7 +2,7 @@
 
 public enum InvoiceState
 {
-    New,
-    Paid,
-    Canceled
+    New = 0b_0001,
+    Paid = 0b_0010,
+    Canceled = 0b_0100
 }
