@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceMgmt.Infrastructure.Data.InMemoryDB
 {
-    public class InMemoryRepository : IRepository
+    public class InMemoryRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly AppDbContext _dbContext;
 
@@ -14,29 +14,33 @@ namespace InvoiceMgmt.Infrastructure.Data.InMemoryDB
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Invoice item, CancellationToken cancellationToken = default)
+        public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)
         {
-            await _dbContext.Set<Invoice>().AddAsync(item, cancellationToken);
+            await _dbContext.Set<TEntity>()
+                            .AddAsync(item, cancellationToken);
         }
 
         public async Task<int> CountAsync(CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Set<Invoice>().CountAsync(cancellationToken);
+            return await _dbContext.Set<TEntity>()
+                                   .CountAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(Invoice item, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(TEntity item, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => _dbContext.Set<Invoice>().Remove(item), cancellationToken);
+            await Task.Run(() => _dbContext.Set<TEntity>().Remove(item), cancellationToken);
         }
 
-        public async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Set<Invoice>().ToListAsync();
+            return await _dbContext.Set<TEntity>()
+                                   .ToListAsync();
         }
 
-        public async Task<Invoice> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Set<Invoice>().FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
+            return await _dbContext.Set<TEntity>()
+                                   .FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
         }
 
         public async Task<int> SaveAsync(CancellationToken cancellationToken = default)
@@ -44,9 +48,9 @@ namespace InvoiceMgmt.Infrastructure.Data.InMemoryDB
             return await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task UpdateAsync(Invoice item, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => _dbContext.Set<Invoice>().Update(item), cancellationToken);
+            await Task.Run(() => _dbContext.Set<TEntity>().Update(item), cancellationToken);
         }
     }
 }
