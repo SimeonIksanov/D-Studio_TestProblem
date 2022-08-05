@@ -1,5 +1,5 @@
 ﻿using InvoiceMgmt.API.ApiModels;
-using InvoiceMgmt.API.Filters;
+using InvoiceMgmt.API.ActionFilters;
 using InvoiceMgmt.API.ServiceModels;
 using InvoiceMgmt.ApplicationCore.Entities;
 using InvoiceMgmt.ApplicationCore.Interfaces;

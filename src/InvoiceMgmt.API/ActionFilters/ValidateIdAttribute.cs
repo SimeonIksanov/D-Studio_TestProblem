@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace InvoiceMgmt.API.Filters
+namespace InvoiceMgmt.API.ActionFilters
 {
     public class ValidateIdAttribute : Attribute, IActionFilter
     {
