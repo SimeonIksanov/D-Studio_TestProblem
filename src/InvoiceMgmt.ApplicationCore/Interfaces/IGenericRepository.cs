@@ -2,7 +2,7 @@
 
 namespace InvoiceMgmt.ApplicationCore.Interfaces;
 
-public interface IRepository<TEntity> where TEntity : BaseEntity
+public interface IGenericRepository<TEntity> where TEntity : BaseEntity
 {
     Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
 

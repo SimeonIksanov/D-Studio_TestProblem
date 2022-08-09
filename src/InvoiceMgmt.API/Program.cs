@@ -16,7 +16,7 @@ public class Program
         builder.Services.AddControllers();
 
         builder.Services.AddScoped<IInvoiceService, InvoiceService>();
-        builder.Services.AddScoped(typeof(IRepository<>), typeof(InMemoryRepository<>));
+        builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         builder.Services.RegisterPersistance();
 
         var app = builder.Build();

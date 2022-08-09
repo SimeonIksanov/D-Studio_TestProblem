@@ -6,9 +6,9 @@ namespace InvoiceMgmt.ApplicationCore.Services;
 
 public class InvoiceService : IInvoiceService
 {
-    private readonly IRepository<Invoice> _repository;
+    private readonly IInvoiceRepository _repository;
 
-    public InvoiceService(IRepository<Invoice> repository)
+    public InvoiceService(IInvoiceRepository repository)
     {
         _repository = repository;
     }
