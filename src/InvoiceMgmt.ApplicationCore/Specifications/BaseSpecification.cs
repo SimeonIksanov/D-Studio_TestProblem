@@ -13,7 +13,7 @@ public abstract class BaseSpecification<TEntity> : ISpecification<TEntity> where
 
     public Expression<Func<TEntity, bool>> Criteria { get; protected set; }
 
-    public int Page { get; } = 1;
+    public int Page { get; protected set; } = 1;
 
-    public int PageSize { get; } = 10;
+    public int PageSize { get; protected set; } = 10;
 }
