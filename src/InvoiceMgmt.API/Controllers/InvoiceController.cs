@@ -5,6 +5,7 @@ using InvoiceMgmt.ApplicationCore.Entities;
 using InvoiceMgmt.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using InvoiceMgmt.API.Specifications;
 
 namespace InvoiceMgmt.API.Controllers;
 
@@ -24,7 +25,8 @@ public class InvoiceController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices(CancellationToken cancellationToken)
     {
-        var invoices = await _invoiceService.GetAllAsync(cancellationToken);
+        var spec = new InvoiceSpecification();
+        var invoices = await _invoiceService.FindAsync(spec, cancellationToken);
         return Ok(invoices);
     }
 

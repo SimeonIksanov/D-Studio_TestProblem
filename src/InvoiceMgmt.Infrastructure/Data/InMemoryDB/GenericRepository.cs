@@ -31,11 +31,17 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         await Task.Run(() => _dbContext.Set<TEntity>().Remove(item), cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification = null, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<TEntity>()
-                               .ToListAsync();
+        var query = ProcessSpec(_dbContext.Set<TEntity>().AsQueryable(), specification);
+        return await query.ToListAsync(cancellationToken);
     }
+
+    //public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    //{
+    //    return await _dbContext.Set<TEntity>()
+    //                           .ToListAsync();
+    //}
 
     public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
@@ -51,6 +57,13 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public async Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         await Task.Run(() => _dbContext.Set<TEntity>().Update(item), cancellationToken);
+    }
+
+    protected virtual IQueryable<TEntity> ProcessSpec(IQueryable<TEntity> query, ISpecification<TEntity> spec)
+    {
+        if (spec.Criteria != null)
+            query = query.Where(spec.Criteria);
+        return query.Skip((spec.Page - 1) * spec.Page).Take(spec.PageSize);
     }
 }
 

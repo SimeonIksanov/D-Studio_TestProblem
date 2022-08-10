@@ -37,9 +37,9 @@ public class InvoiceService : IInvoiceService
         return await _repository.GetByIdAsync(id, cancellationToken);
     }
 
-    public async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Invoice>> FindAsync(ISpecification<Invoice> specification, CancellationToken cancellationToken = default)
     {
-        return await _repository.GetAllAsync(cancellationToken);
+        return await _repository.FindAsync(specification, cancellationToken);
     }
 }
 
