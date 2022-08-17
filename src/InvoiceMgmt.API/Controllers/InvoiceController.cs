@@ -40,6 +40,7 @@ public class InvoiceController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateInvoice([FromBody] InvoiceCreateRequest input, CancellationToken cancellationToken)
     {
+        //todo add automapper
         var createRequest = new CreateInvoiceInput
         {
             Amount = input.Amount,
@@ -54,6 +55,7 @@ public class InvoiceController : ControllerBase
     [HttpPut("{id:int}"), ValidateId]
     public async Task<IActionResult> ChangeInvoice([FromRoute] int id, [FromBody] InvoiceChangeRequest input, CancellationToken cancellationToken)
     {
+        //todo add automapper
         var savedInvoice = await _invoiceService.FindByIdAsync(id, cancellationToken);
 
         if (savedInvoice == null)
