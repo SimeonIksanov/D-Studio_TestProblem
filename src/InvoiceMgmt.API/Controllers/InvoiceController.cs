@@ -21,11 +21,26 @@ public class InvoiceController : ControllerBase
         _logger = logger;
     }
 
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoices([FromQuery] InvoiceQueryParameters queryParameters, CancellationToken cancellationToken)
     {
         var spec = new InvoiceSpecification(queryParameters);
         var invoices = await _invoiceService.FindAsync(spec, cancellationToken);
+
+        switch (queryParameters.SortBy)
+        {
+            case nameof(Invoice.CreatedAt):
+                invoices = queryParameters.SortOrder == "Desc" ? invoices.OrderByDescending(s => s.CreatedAt) : invoices.OrderBy(s => s.CreatedAt);
+                break;
+            case nameof(Invoice.ChangedAt):
+                invoices = queryParameters.SortOrder == "Desc" ? invoices.OrderByDescending(s => s.ChangedAt) : invoices.OrderBy(s => s.ChangedAt);
+                break;
+            default:
+                invoices = queryParameters.SortOrder == "Desc" ? invoices.OrderByDescending(s => s.Number) : invoices.OrderBy(s => s.Number);
+                break;
+        }
+
         return Ok(invoices);
     }
 

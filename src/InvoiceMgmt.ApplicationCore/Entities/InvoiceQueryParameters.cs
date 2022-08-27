@@ -16,4 +16,7 @@ public class InvoiceQueryParameters : QueryStringParameters
 
     public int PaymentMethodMask { get; set; } = 0b_111;
     public int StateMask { get; set; } = 0b_111;
+
+    public string SortBy { get; set; } = nameof(Invoice.Number);
+    public string SortOrder { get; set; } = "Desc";
 }
